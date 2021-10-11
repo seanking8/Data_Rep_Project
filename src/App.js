@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Header from './components/header';
 import Content from './components/content';
 import Footer from './components/footer';
+import Read from './components/read';
+import Create from './components/create';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -24,21 +26,21 @@ class App extends Component {
             <Container>
               <Navbar.Brand href="/">Home</Navbar.Brand>
               <Nav className="me-auto">
-                <Nav.Link href="/Header">Header</Nav.Link>
                 <Nav.Link href="/Content">Content</Nav.Link>
-                <Nav.Link href="/Footer">Footer</Nav.Link>
+                <Nav.Link href="/Create">Create</Nav.Link>
+                <Nav.Link href="/Read">Read</Nav.Link>
               </Nav>
             </Container>
           </Navbar>
           <Switch>
-            <Route path="/Header">
-              <Header />
-            </Route>
             <Route path="/Content">
               <Content />
             </Route>
-            <Route path="/Footer">
-              <Footer />
+            <Route path="/Create">
+              <Create />
+            </Route>
+            <Route path="/Read">
+              <Read />
             </Route>
           </Switch>
         </div>
