@@ -7,6 +7,7 @@ class Content extends Component {
         return (
             <div>
                 <h1>Movie App</h1>
+                {/* Gets the current time and displays it */}
                 <h2>It is {new Date().toLocaleTimeString()}.</h2>
             </div>
         );

@@ -6,8 +6,9 @@ class MovieItem extends Component {
     render() {
         return (
             <div>
-                <h4></h4>
-                <p></p>
+
+                {/* Reads in the specific informataion from the movie object passed to it by Movies component */}
+                {/* Builds a Bootstrap card which diaplays each film's title, poster and year of release */}
 
                 <Card>
                     <Card.Header>{this.props.movie.Title}</Card.Header>

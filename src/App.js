@@ -18,6 +18,8 @@ import {
 
 class App extends Component {
 
+  // Routing is used to switch out which compnonent is being displayed,
+  // based on which link in the Bootstrap NavBar is selected
   render() {
     return (
       <Router>

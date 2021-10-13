@@ -3,6 +3,7 @@ import Movies from './movies';
 
 class Read extends Component {
 
+    // Create state array object and movies object to store JSON movie data
     state = {
         movies: [
             {
@@ -33,6 +34,8 @@ class Read extends Component {
         return (
             <div>
                 <h1>This is read Component</h1>
+
+                {/* Embed Movies component and pass JSON data to it using movies object */}
                 <Movies movies={this.state.movies}></Movies>
             </div>
         );
