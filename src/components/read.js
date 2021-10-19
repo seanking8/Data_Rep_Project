@@ -9,16 +9,16 @@ class Read extends Component {
         movies: []
     };
 
-    //component life cycle hook - promise
+    //Use axios in component life-cycle hook to get information from JSON URL and update state values
     componentDidMount() {
         axios.get('https://jsonblob.com/api/jsonblob/894944504570986496')
             //fulfulled state
             .then(
                 //updates movies array in state with data from json
                 (response) => {
-                    this.setState({ movies: response.data.movies})
+                    this.setState({ movies: response.data.movies })
                 })
-            //rejected state - error message
+            //rejected state, logs error message
             .catch((error) => {
                 console.log(error);
             });
