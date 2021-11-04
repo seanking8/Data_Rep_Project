@@ -5,8 +5,7 @@ const app = express();
 const port = 4000;
 const cors = require('cors');
 
-//I found that bodyParser is deprecated. As of V4.16, it is inbuilt into Express
-
+//bodyParser is deprecated. As of V4.16, it is inbuilt into Express
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }))
 
@@ -15,6 +14,7 @@ app.use(express.json())
 
 app.use(cors());
 
+//Code to avoid a CORS error
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -63,7 +63,7 @@ app.get('/api/movies', (req, res) => {
     })
 })
 
-// listens for POST request and sends back values from form
+// listens for POST request and logs values from form to server console
 app.post('/api/movies', (req, res) => {
     console.log(`Movie Received`);
     console.log(req.body.Title);

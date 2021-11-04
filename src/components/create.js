@@ -45,6 +45,7 @@ class Create extends Component {
     }
 
     //Prints success message with movie details in console and alert. Resets state values to blank
+    //Now uses Axios to POST state values to server
     handleSubmit(e) {
         e.preventDefault();
 
@@ -52,19 +53,21 @@ class Create extends Component {
         alert(success)
         console.log(success)
 
+        axios.post('http://localhost:4000/api/movies', this.state)
+            //fulfilled state, logs response
+            .then((res) => {
+                console.log(res);
+            })
+            //rejected state, logs error
+            .catch((err) => {
+                console.log(err);
+            });
+
         this.setState({
             Title: '',
             Year: '',
             Poster: ''
         })
-
-        axios.post('http://localhost:4000/api/movies', this.state)
-        .then((res) => {
-            console.log(res);
-        })
-        .catch ((err)=>{
-            console.log(err);
-        });
     }
 
     render() {

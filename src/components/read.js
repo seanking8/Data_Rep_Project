@@ -9,7 +9,7 @@ class Read extends Component {
         movies: []
     };
 
-    //Use axios in component life-cycle hook to get information from JSON URL and update state values
+    //Use axios in component life-cycle hook to get JSON data from server and update state values
     componentDidMount() {
         axios.get('http://localhost:4000/api/movies')
             //fulfulled state
