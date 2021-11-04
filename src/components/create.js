@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 // Component to display a form where the user can submit a movie and its details
 // Will be displayed when Create is seleted in nav bar
@@ -56,6 +57,14 @@ class Create extends Component {
             Year: '',
             Poster: ''
         })
+
+        axios.post('http://localhost:4000/api/movies', this.state)
+        .then((res) => {
+            console.log(res);
+        })
+        .catch ((err)=>{
+            console.log(err);
+        });
     }
 
     render() {

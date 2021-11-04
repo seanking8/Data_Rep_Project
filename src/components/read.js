@@ -11,7 +11,7 @@ class Read extends Component {
 
     //Use axios in component life-cycle hook to get information from JSON URL and update state values
     componentDidMount() {
-        axios.get('https://jsonblob.com/api/jsonblob/894944504570986496')
+        axios.get('http://localhost:4000/api/movies')
             //fulfulled state
             .then(
                 //updates movies array in state with data from json
