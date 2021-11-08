@@ -15,6 +15,8 @@ class MovieItem extends Component {
                     <Card.Body>
                         <blockquote className="blockquote mb-0">
                             <img src={this.props.movie.Poster} width="200" height="200"></img>
+                            <br></br>
+                            <br></br>
                             <footer className="blockquote-footer">
                                 {this.props.movie.Year}
                             </footer>

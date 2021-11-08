@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-//Connect server to DB
+//Connect server to hosted MongoDB database
 
 const connectString = 'mongodb+srv://admin:ballygowan@cluster0.toceu.mongodb.net/movies?retryWrites=true&w=majority';
 
@@ -34,66 +34,52 @@ async function main() {
     await mongoose.connect(connectString);
 }
 
-//Define DB Schema
+//Define database Schema
 
 const Schema = mongoose.Schema;
 
 var movieSchema = new Schema({
-    title: String,
-    year: String,
-    poster: String
+    Title: String,
+    Year: String,
+    Poster: String
 });
 
 //Compile model from schema
 
 var MovieModel = mongoose.model("movie", movieSchema);
 
-// Responds to any request which includes the '/api/movies' path with movie info in JSON form
+// Respond to any request which includes the '/api/movies' path with movie info in JSON form
 app.get('/api/movies', (req, res) => {
-    const myMovies = [
-        {
-            "Title": "Avengers: Infinity War",
-            "Year": "2018",
-            "imdbID": "tt4154756",
-            "Type": "movie",
-            "Poster": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg"
-        },
-        {
-            "Title": "Captain America: Civil War",
-            "Year": "2016",
-            "imdbID": "tt3498820",
-            "Type": "movie",
-            "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg"
-        },
-        {
-            "Title": "World War Z",
-            "Year": "2013",
-            "imdbID": "tt0816711",
-            "Type": "movie",
-            "Poster": "https://m.media-amazon.com/images/M/MV5BNDQ4YzFmNzktMmM5ZC00MDZjLTk1OTktNDE2ODE4YjM2MjJjXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
-        },
-        {
-            "Title": "War of the Worlds",
-            "Year": "2005",
-            "imdbID": "tt0407304",
-            "Type": "movie",
-            "Poster": "https://m.media-amazon.com/images/M/MV5BNDUyODAzNDI1Nl5BMl5BanBnXkFtZTcwMDA2NDAzMw@@._V1_SX300.jpg"
-        }
-    ];
 
-    //Response: Create object 'movies' and pass JSON data to it from above myMovies variable
-    res.status(200).json({
-        message: "All good",
-        movies: myMovies
+    MovieModel.find((err, data) => {
+        res.json(data);
     })
 })
 
-// listens for POST request and logs values from form to server console
+//Listen for any GET request to '/api/movies/:id', identify which document the id belongs to and respond with the corresponding JSON info
+app.get('/api/movies/:id', (req, res) => {
+
+    MovieModel.findById(req.params.id, (err, data) => {
+        res.json(data);
+    })
+})
+
+// listens for POST request and logs values from form to server console.
+// Now creates new document in database and stores the values
 app.post('/api/movies', (req, res) => {
     console.log(`Movie Received`);
     console.log(req.body.Title);
     console.log(req.body.Year);
     console.log(req.body.Poster);
+
+    MovieModel.create({
+        Title: req.body.Title,
+        Year: req.body.Year,
+        Poster: req.body.Poster
+    })
+
+    //Send confirmation to the client
+    res.send('Movie Added!');
 })
 
 app.listen(port, () => {

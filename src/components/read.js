@@ -16,7 +16,7 @@ class Read extends Component {
             .then(
                 //updates movies array in state with data from json
                 (response) => {
-                    this.setState({ movies: response.data.movies })
+                    this.setState({ movies: response.data })
                 })
             //rejected state, logs error message
             .catch((error) => {
