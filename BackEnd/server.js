@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const port = 4000;
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 //bodyParser is deprecated. As of V4.16, it is inbuilt into Express
 // parse application/x-www-form-urlencoded
@@ -22,6 +23,30 @@ app.use(function (req, res, next) {
         "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
+//Connect server to DB
+
+const connectString = 'mongodb+srv://admin:ballygowan@cluster0.toceu.mongodb.net/movies?retryWrites=true&w=majority';
+
+main().catch(err => console.log(err));
+
+async function main() {
+    await mongoose.connect(connectString);
+}
+
+//Define DB Schema
+
+const Schema = mongoose.Schema;
+
+var movieSchema = new Schema({
+    title: String,
+    year: String,
+    poster: String
+});
+
+//Compile model from schema
+
+var MovieModel = mongoose.model("movie", movieSchema);
 
 // Responds to any request which includes the '/api/movies' path with movie info in JSON form
 app.get('/api/movies', (req, res) => {
