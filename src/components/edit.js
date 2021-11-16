@@ -23,12 +23,13 @@ class Edit extends Component {
         }
     }
 
-    //Log id to console when component becomes active
+    //When component becomes active, pass id from URL server to identify and read movie document from DB
     componentDidMount() {
         console.log(this.props.match.params.id);
 
-        //asynchonours call to return promise
+        //Async call which returns promise
         axios.get('http://localhost:4000/api/movies/' + this.props.match.params.id)
+            //fulfilled state, logs response
             .then(response => {
                 this.setState({
                     _id: response.data._id,
@@ -37,6 +38,7 @@ class Edit extends Component {
                     Poster: response.data.Poster
                 })
             })
+            //rejected state, logs error
             .catch((error) => {
                 console.log(error);
             });
@@ -72,27 +74,13 @@ class Edit extends Component {
         alert(success)
         console.log(success)
 
-        // axios.post('http://localhost:4000/api/movies', this.state)
-        //     //fulfilled state, logs response
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-        //     //rejected state, logs error
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
-
-        // const editMovie = {
-        //     Title: this.state.Title,
-        //     Year: this.state.Year,
-        //     Poster: this.state.Poster,
-        //     _id: this.state._id
-        // }
-
+        //Pass new movie info from the state to the server where it will be written to the DB
         axios.put('http://localhost:4000/api/movies/' + this.state._id, this.state)
+            //fulfilled state, logs response
             .then(res => {
                 console.log(res.data);
             })
+            //rejected state, logs error
             .catch(error => {
                 console.log(error);
             });

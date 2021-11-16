@@ -64,10 +64,10 @@ app.get('/api/movies/:id', (req, res) => {
     })
 })
 
+//make async call to db, find record by id and overwrite it, send back data
 app.put('/api/movies/:id', (req, res) => {
     console.log(req.body);
 
-    //make async call to db, find record by id and overwrite it, send back data
     MovieModel.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, data) => {
         res.send(data);
     })
