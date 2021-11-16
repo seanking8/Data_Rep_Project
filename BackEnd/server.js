@@ -64,6 +64,15 @@ app.get('/api/movies/:id', (req, res) => {
     })
 })
 
+app.put('/api/movies/:id', (req, res) => {
+    console.log(req.body);
+
+    //make async call to db, find record by id and overwrite it, send back data
+    MovieModel.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, data) => {
+        res.send(data);
+    })
+})
+
 // listens for POST request and logs values from form to server console.
 // Now creates new document in database and stores the values
 app.post('/api/movies', (req, res) => {

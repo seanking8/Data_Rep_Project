@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class MovieItem extends Component {
 
@@ -21,7 +22,9 @@ class MovieItem extends Component {
                                 {this.props.movie.Year}
                             </footer>
                         </blockquote>
+                        <Link to={"/edit/"+this.props.movie._id} className="btn btn-secondary btn-sm">Edit</Link>
                     </Card.Body>
+                    
                 </Card>
             </div>
         );
