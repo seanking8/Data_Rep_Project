@@ -94,7 +94,7 @@ app.post('/api/movies', (req, res) => {
 //Listens for DELETE request at the below path and reads ID from URL.
 //Then locates corresponding record in DB and deletes it
 app.delete('/api/movies/:id', (req, res) => {
-    console.log("Delete movie: "+req.params.id);
+    console.log("Delete movie: " + req.params.id);
 
     MovieModel.findByIdAndDelete(req.params.id, (err, data) => {
         res.send(data);
