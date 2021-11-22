@@ -9,18 +9,25 @@ class MovieItem extends Component {
     constructor() {
         super();
 
+        //bind events to this instance
         this.DeleteMovie = this.DeleteMovie.bind(this);
     }
 
+    //Makes HTTP DELETE request to server to delete movie.
+    //Also calls ReloadData function which has been passed down from its grandparent, the Read component
     DeleteMovie(e) {
         e.preventDefault();
-        console.log("Delete " + this.props.movie._id);
+        console.log("Deleting " + this.props.movie._id + "... ");
 
-        axios.delete("http://localhost:4000/api/movies/"+this.props.movie._id)
-        .then(()=>{
-            this.props.ReloadData();
-        })
-        .catch();
+        axios.delete("http://localhost:4000/api/movies/" + this.props.movie._id)
+            //fulfulled state
+            .then(() => {
+                this.props.ReloadData();
+            })
+            //rejected state, logs error message
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     render() {
@@ -42,7 +49,7 @@ class MovieItem extends Component {
                             </footer>
                         </blockquote>
                         <Link to={"/edit/" + this.props.movie._id} className="btn btn-secondary btn-sm">Edit</Link>
-                        <Button variant="danger" onClick={this.DeleteMovie}>Delete</Button>
+                        <Button variant="danger" onClick={this.DeleteMovie} className="btn-sm">Delete</Button>
                     </Card.Body>
                 </Card>
             </div>

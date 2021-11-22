@@ -4,9 +4,10 @@ import axios from 'axios';
 
 class Read extends Component {
 
-    constructor(){
+    constructor() {
         super();
 
+        //bind events to this instance
         this.ReloadData = this.ReloadData.bind(this);
     }
 
@@ -30,7 +31,8 @@ class Read extends Component {
             });
     }
 
-    ReloadData(){
+    //Sends a new get request to the server to reload all movie data on the page
+    ReloadData() {
         axios.get('http://localhost:4000/api/movies')
             //fulfulled state
             .then(
