@@ -4,6 +4,12 @@ import axios from 'axios';
 
 class Read extends Component {
 
+    constructor(){
+        super();
+
+        this.ReloadData = this.ReloadData.bind(this);
+    }
+
     // Create state array object and movies object to store JSON movie data
     state = {
         movies: []
@@ -24,13 +30,27 @@ class Read extends Component {
             });
     }
 
+    ReloadData(){
+        axios.get('http://localhost:4000/api/movies')
+            //fulfulled state
+            .then(
+                //updates movies array in state with data from json
+                (response) => {
+                    this.setState({ movies: response.data })
+                })
+            //rejected state, logs error message
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
     render() {
         return (
             <div>
                 <h1>This is read Component</h1>
 
                 {/* Embed Movies component and pass JSON data to it using movies object */}
-                <Movies movies={this.state.movies}></Movies>
+                <Movies movies={this.state.movies} ReloadData={this.ReloadData}></Movies>
             </div>
         );
     }
