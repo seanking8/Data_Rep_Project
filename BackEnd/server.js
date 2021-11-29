@@ -5,6 +5,7 @@ const app = express();
 const port = 4000;
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
 
 //bodyParser is deprecated. As of V4.16, it is inbuilt into Express
 // parse application/x-www-form-urlencoded
@@ -23,6 +24,10 @@ app.use(function (req, res, next) {
         "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
+//Configuration - point to build folder and static folder
+app.use(express.static(path.join(__dirname, '../build')));
+app.use('/static', express.static(path.join(__dirname, 'build//static')));
 
 //Connect server to hosted MongoDB database
 
@@ -99,6 +104,11 @@ app.delete('/api/movies/:id', (req, res) => {
     MovieModel.findByIdAndDelete(req.params.id, (err, data) => {
         res.send(data);
     })
+})
+
+//Listens for GET requests for any URL that is not described above and serves index.html page
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/../build/index.html'));
 })
 
 app.listen(port, () => {
