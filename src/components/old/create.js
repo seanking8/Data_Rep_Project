@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Component to display a form where the user can submit a movie and its details
 // Will be displayed when Create is seleted in nav bar
-class Edit extends Component {
+class Create extends Component {
 
     constructor() {
         //invoke parent constructor
@@ -19,29 +19,8 @@ class Edit extends Component {
         this.state = {
             Title: '',
             Artist: '',
-            Rating: 0
+            Rating: ''
         }
-    }
-
-    //When component becomes active, pass id from URL server to identify and read movie document from DB
-    componentDidMount() {
-        console.log(this.props.match.params.id);
-
-        //Async call which returns promise
-        axios.get('http://localhost:4000/albums/' + this.props.match.params.id)
-            //fulfilled state, logs response
-            .then(response => {
-                this.setState({
-                    _id: response.data._id,
-                    Title: response.data.Title,
-                    Artist: response.data.Artist,
-                    Rating: response.data.Rating
-                })
-            })
-            //rejected state, logs error
-            .catch((error) => {
-                console.log(error);
-            });
     }
 
     //Updates value of Title in state when change is made to form
@@ -70,20 +49,25 @@ class Edit extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        let success = this.state.Title + ' has been Updated!\nArtist: ' + this.state.Artist + '\nRating: ' + this.state.Rating;
+        let success = this.state.Title + ' has been added!\nArtist: ' + this.state.Artist + '\nRating: ' + this.state.Rating;
         alert(success)
         console.log(success)
 
-        //Pass new movie info from the state to the server where it will be written to the DB
-        axios.put('http://localhost:4000/albums/' + this.state._id, this.state)
+        axios.post('http://localhost:4000/albums', this.state)
             //fulfilled state, logs response
-            .then(res => {
-                console.log(res.data);
+            .then((res) => {
+                console.log(res);
             })
             //rejected state, logs error
-            .catch(error => {
-                console.log(error);
+            .catch((err) => {
+                console.log(err);
             });
+
+        this.setState({
+            Title: '',
+            Artist: '',
+            Rating: 0
+        })
     }
 
     render() {
@@ -112,16 +96,16 @@ class Edit extends Component {
                     <div className="form-group row">
                         <div className="col">
                             <label>
-                                Rating:
-                                <input type="text" value={this.state.Rating} onChange={this.handleChangeRating} />
+                                Your Rating:
+                                <input type="number" value={this.state.Rating} onChange={this.handleChangeRating} />
                             </label>
                         </div>
                     </div>
-                    <input type="submit" value="Edit Album" className="btn btn-primary" />
+                    <input type="submit" value="Add Album" className="btn btn-primary" />
                 </form>
             </div>
         );
     }
 }
 
-export default Edit;
+export default Create;

@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
-// Component to display a form where the user can submit a movie and its details
-// Will be displayed when Create is seleted in nav bar
-class Create extends Component {
+class Add extends Component {
 
     constructor() {
         //invoke parent constructor
@@ -12,14 +10,14 @@ class Create extends Component {
         //bind events to this instance
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
-        this.handleChangeYear = this.handleChangeYear.bind(this);
-        this.handleChangePoster = this.handleChangePoster.bind(this);
+        this.handleChangeArtist = this.handleChangeArtist.bind(this);
+        this.handleChangeRating = this.handleChangeRating.bind(this);
 
         //set values in state to blank
         this.state = {
             Title: '',
-            Year: '',
-            Poster: ''
+            Artist: '',
+            Rating: ''
         }
     }
 
@@ -30,57 +28,51 @@ class Create extends Component {
         })
     }
 
-    //Updates value of Year in state when change is made to form
-    handleChangeYear(e) {
+    //Updates value of Artist in state when change is made to form
+    handleChangeArtist(e) {
         this.setState({
-            Year: e.target.value
+            Artist: e.target.value
         })
     }
 
-    //Updates value of Poster in state when change is made to form
-    handleChangePoster(e) {
+    //Updates value of Rating in state when change is made to form
+    handleChangeRating(e) {
         this.setState({
-            Poster: e.target.value
+            Rating: e.target.value
         })
     }
 
     //Prints success message with movie details in console and alert. Resets state values to blank
-    //Now uses Axios to POST state values to server
     handleSubmit(e) {
         e.preventDefault();
 
-        let success = this.state.Title + ' has been added!\nYear: ' + this.state.Year + '\nPoster URL: ' + this.state.Poster;
+        let success = this.state.Title + ' has been added!\nArtist: ' + this.state.Artist + '\Rating: ' + this.state.Rating;
         alert(success)
         console.log(success)
 
-        axios.post('http://localhost:4000/api/movies', this.state)
-            //fulfilled state, logs response
+        const newAlbum = {
+            Title: this.state.Title,
+            Artist: this.state.Artist,
+            Rating: this.state.Rating
+        }
+
+        axios.post('http://localhost:4000/albums', newAlbum)
             .then((res) => {
                 console.log(res);
             })
-            //rejected state, logs error
-            .catch((err) => {
-                console.log(err);
+            .catch((error) => {
+                console.log(error);
             });
-
-        this.setState({
-            Title: '',
-            Year: '',
-            Poster: ''
-        })
     }
 
     render() {
         return (
-
-            //Form for user to input the movie data. Any change will update the state. Submit calls above function
-
-            <div>
+            <div className="App">
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group row">
                         <div className="col">
                             <label>
-                                Movie Title:
+                                Album Title:
                                 <input type="text" value={this.state.Title} onChange={this.handleChangeTitle} />
                             </label>
                         </div>
@@ -88,24 +80,24 @@ class Create extends Component {
                     <div className="form-group row">
                         <div className="col">
                             <label>
-                                Year of Release:
-                                <input type="text" value={this.state.Year} onChange={this.handleChangeYear} />
+                                Artist:
+                                <input type="text" value={this.state.Artist} onChange={this.handleChangeArtist} />
                             </label>
                         </div>
                     </div>
                     <div className="form-group row">
                         <div className="col">
                             <label>
-                                Poster URL:
-                                <input type="text" value={this.state.Poster} onChange={this.handleChangePoster} />
+                                Your Rating:
+                                <input type="Number" min="0" max="10" value={this.state.Rating} onChange={this.handleChangeRating} />
                             </label>
                         </div>
                     </div>
-                    <input type="submit" value="Add Movie" className="btn btn-primary" />
+                    <input type="submit" value="Add Album" className="btn btn-primary" />
                 </form>
             </div>
         );
     }
 }
 
-export default Create;
+export default Add;

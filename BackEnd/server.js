@@ -31,7 +31,7 @@ app.use('/static', express.static(path.join(__dirname, 'build//static')));
 
 //Connect server to hosted MongoDB database
 
-const connectString = 'mongodb+srv://admin:ballygowan@cluster0.toceu.mongodb.net/movies?retryWrites=true&w=majority';
+const connectString = 'mongodb+srv://rsdbuser:rsdb@cluster0.7av32.mongodb.net/albums?retryWrites=true&w=majority';
 
 main().catch(err => console.log(err));
 
@@ -43,65 +43,65 @@ async function main() {
 
 const Schema = mongoose.Schema;
 
-var movieSchema = new Schema({
+var albumSchema = new Schema({
     Title: String,
-    Year: String,
-    Poster: String
+    Artist: String,
+    Rating: Number
 });
 
 //Compile model from schema
 
-var MovieModel = mongoose.model("movie", movieSchema);
+var AlbumMod = mongoose.model("albums", albumSchema);
 
-// Respond to any request which includes the '/api/movies' path with movie info in JSON form
-app.get('/api/movies', (req, res) => {
+// Respond to any request which includes the '/albums' path with movie info in JSON form
+app.get('/albums', (req, res) => {
 
-    MovieModel.find((err, data) => {
+    AlbumMod.find((err, data) => {
         res.json(data);
     })
 })
 
-//Listen for any GET request to '/api/movies/:id', identify which document the id belongs to and respond with the corresponding JSON info
-app.get('/api/movies/:id', (req, res) => {
+//Listen for any GET request to '/albums/:id', identify which document the id belongs to and respond with the corresponding JSON info
+app.get('/albums/:id', (req, res) => {
 
-    MovieModel.findById(req.params.id, (err, data) => {
+    AlbumMod.findById(req.params.id, (err, data) => {
         res.json(data);
     })
 })
 
 //make async call to db, find record by id and overwrite it, send back data
-app.put('/api/movies/:id', (req, res) => {
+app.put('/albums/:id', (req, res) => {
     console.log(req.body);
 
-    MovieModel.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, data) => {
+    AlbumMod.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, data) => {
         res.send(data);
     })
 })
 
 // listens for POST request and logs values from form to server console.
 // Now creates new document in database and stores the values
-app.post('/api/movies', (req, res) => {
-    console.log(`Movie Received`);
+app.post('/albums', (req, res) => {
+    console.log(`Album Received`);
     console.log(req.body.Title);
-    console.log(req.body.Year);
-    console.log(req.body.Poster);
+    console.log(req.body.Artist);
+    console.log(req.body.Rating);
 
-    MovieModel.create({
+    AlbumMod.create({
         Title: req.body.Title,
-        Year: req.body.Year,
-        Poster: req.body.Poster
+        Artist: req.body.Artist,
+        Rating: req.body.Rating
     })
 
     //Send confirmation to the client
-    res.send('Movie Added!');
+    res.send('Album Added!');
 })
 
 //Listens for DELETE request at the below path and reads ID from URL.
 //Then locates corresponding record in DB and deletes it
-app.delete('/api/movies/:id', (req, res) => {
-    console.log("Delete movie: " + req.params.id);
+app.delete('/albums/:id', (req, res) => {
+    console.log("Delete album: " + req.params.id);
 
-    MovieModel.findByIdAndDelete(req.params.id, (err, data) => {
+    AlbumMod.findByIdAndDelete(req.params.id, (err, data) => {
         res.send(data);
     })
 })

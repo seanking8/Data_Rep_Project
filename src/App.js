@@ -1,17 +1,13 @@
 import './App.css';
 import React, { Component } from 'react';
-import Header from './components/header';
-import Content from './components/content';
-import Footer from './components/footer';
-import Read from './components/read';
-import Create from './components/create';
-import Edit from './components/edit';
+import Home from './Components/Home';
+import Add from './Components/Add';
+import Edit from './Components/Edit';
+import List from './Components/List';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import {
-  BrowserRouter as Router,
+  BrowserRouter as BRouter,
   Switch,
   Route,
   Link
@@ -23,31 +19,39 @@ class App extends Component {
   // based on which link in the Bootstrap NavBar is selected
   render() {
     return (
-      <Router>
+      <BRouter>
         <div className="App">
-          <Navbar bg="primary" variant="dark">
-            <Container>
-              <Navbar.Brand href="/">Home</Navbar.Brand>
+          <Navbar bg="dark" variant="dark">
+            <Container><Navbar.Brand href="/home">
+              <img
+                alt=""
+                src="/logo.svg"
+                width="30"
+                height="30"
+                className="d-inline-block align-top"
+              />{' '}
+              Record-Scratch
+            </Navbar.Brand>
               <Nav className="me-auto">
-                <Nav.Link href="/Content">Content</Nav.Link>
-                <Nav.Link href="/Create">Create</Nav.Link>
-                <Nav.Link href="/Read">Read</Nav.Link>
-                <Nav.Link href="/Edit">Edit</Nav.Link>
+                <Nav.Link href="/home">Home</Nav.Link>
+                <Nav.Link href="/list">List</Nav.Link>
+                <Nav.Link href="/add">Add</Nav.Link>
+                <Nav.Link href="/edit">Edit</Nav.Link>
               </Nav>
             </Container>
           </Navbar>
           <Switch>
-            <Route path="/Content" component={Content}>
+            <Route path="/home" component={Home}>
             </Route>
-            <Route path="/Create" component={Create}>
+            <Route path="/Add" component={Add}>
             </Route>
-            <Route path="/Read" component={Read}>
+            <Route path="/List" component={List}>
             </Route>
             <Route path="/Edit/:id" component={Edit}>
             </Route>
           </Switch>
         </div>
-      </Router>
+      </BRouter>
     );
   }
 }

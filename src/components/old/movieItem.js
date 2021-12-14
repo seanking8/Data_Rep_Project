@@ -10,16 +10,16 @@ class MovieItem extends Component {
         super();
 
         //bind events to this instance
-        this.DeleteMovie = this.DeleteMovie.bind(this);
+        this.DeleteAlbum = this.DeleteAlbum.bind(this);
     }
 
-    //Makes HTTP DELETE request to server to delete movie.
+    //Makes HTTP DELETE request to server to delete album.
     //Also calls ReloadData function which has been passed down from its grandparent, the Read component
-    DeleteMovie(e) {
+    DeleteAlbum(e) {
         e.preventDefault();
-        console.log("Deleting " + this.props.movie._id + "... ");
+        console.log("Deleting " + this.props.album._id + "... ");
 
-        axios.delete("http://localhost:4000/api/movies/" + this.props.movie._id)
+        axios.delete("http://localhost:4000/albums/" + this.props.album._id)
             //fulfulled state
             .then(() => {
                 this.props.ReloadData();
@@ -34,22 +34,22 @@ class MovieItem extends Component {
         return (
             <div>
 
-                {/* Reads in the specific informataion from the movie object passed to it by Movies component */}
-                {/* Builds a Bootstrap card which diaplays each film's title, poster and year of release */}
+                {/* Reads in the specific informataion from the album object passed to it by albums component */}
+                {/* Builds a Bootstrap card which diaplays each film's title, Rating and Artist of release */}
 
                 <Card>
-                    <Card.Header>{this.props.movie.Title}</Card.Header>
+                    <Card.Header>{this.props.album.Title}</Card.Header>
                     <Card.Body>
                         <blockquote className="blockquote mb-0">
-                            <img src={this.props.movie.Poster} width="200" height="200"></img>
+                            <h4>{this.props.album.Rating}</h4>
                             <br></br>
                             <br></br>
                             <footer className="blockquote-footer">
-                                {this.props.movie.Year}
+                                {this.props.album.Artist}
                             </footer>
                         </blockquote>
-                        <Link to={"/edit/" + this.props.movie._id} className="btn btn-secondary btn-sm">Edit</Link>
-                        <Button variant="danger" onClick={this.DeleteMovie} className="btn-sm">Delete</Button>
+                        <Link to={"/edit/" + this.props.album._id} className="btn btn-secondary btn-sm">Edit</Link>
+                        <Button variant="danger" onClick={this.DeleteAlbum} className="btn-sm">Delete</Button>
                     </Card.Body>
                 </Card>
             </div>
