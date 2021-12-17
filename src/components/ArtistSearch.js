@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { ListGroup, Form, ListGroupItem } from 'react-bootstrap';
-import Results from "./Results";
+import { Form } from 'react-bootstrap';
 import Result from "./Result";
 
 class ArtistSearch extends Component {
@@ -120,7 +119,10 @@ class ArtistSearch extends Component {
         if (e.target.value !== '') {
             // var URL = this.getImgURL(e.target.value);
 
-            axios.get('https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q=' + this.state.Artist + '+' + this.state.Title + '+official+album+cover&pageNumber=1&pageSize=1&autoCorrect=false',
+            let artist = this.state.Artist.replace(/\s/g, '_');
+            let title = this.state.Selection.replace(/\s/g, '+');
+
+            axios.get('https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q=' + artist + '+' + title + '+official+album+cover&pageNumber=1&pageSize=1&autoCorrect=false',
                 {
                     headers: {
                         'x-rapidapi-host': 'contextualwebsearch-websearch-v1.p.rapidapi.com',

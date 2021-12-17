@@ -1,6 +1,7 @@
 import React from "react";
 import Albums from "./Albums";
 import axios from 'axios';
+import { Button, Form } from "react-bootstrap";
 
 class List extends React.Component {
 
@@ -9,29 +10,41 @@ class List extends React.Component {
 
         //bind events to this instance
         this.ReloadData = this.ReloadData.bind(this);
+        this.ReloadDataAsc = this.ReloadDataAsc.bind(this);
+        this.ReloadDataDesc = this.ReloadDataDesc.bind(this);
 
 
     }
 
     state = {
-        albums: []
-
+        albums: [],
+        // ascending: false
     };
 
+    // Full function for readability
+    orderByRatingDesc(a, b) {
+        if (a.Rating < b.Rating) {
+            return 1;
+        }
+        if (a.Rating > b.Rating) {
+            return -1;
+        }
+        return 0;
+    }
 
+    // Full function for readability
+    orderByRatingAsc(a, b) {
+        if (a.Rating < b.Rating) {
+            return -1;
+        }
+        if (a.Rating > b.Rating) {
+            return 1;
+        }
+        return 0;
+    }
 
     //Use axios in component life-cycle hook to get JSON data from server and update state values
     componentDidMount() {
-
-
-        // const MusicBrainzApi = require('musicbrainz-api').MusicBrainzApi;
-
-        // const mbApi = new MusicBrainzApi({
-        //   appName: 'Record-Scratch',
-        //   appVersion: '0.1.0',
-        //   appContactInfo: 'seank579@gmail.com'
-        // });
-
 
         axios.get('http://localhost:4000/albums')
             //fulfulled state
@@ -39,6 +52,8 @@ class List extends React.Component {
                 //updates movies array in state with data from json
                 (response) => {
                     this.setState({ albums: response.data })
+
+                    // this.state.albums.sort(orderByOrderValue);
                     console.log(this.state.albums)
                 })
             //rejected state, logs error message
@@ -142,6 +157,8 @@ class List extends React.Component {
                 //updates movies array in state with data from json
                 (response) => {
                     this.setState({ albums: response.data })
+                    // this.state.albums.sort(orderByOrderValue);
+                    console.log(this.state.albums)
                 })
             //rejected state, logs error message
             .catch((error) => {
@@ -149,10 +166,45 @@ class List extends React.Component {
             });
     }
 
+    ReloadDataAsc() {
+        axios.get('http://localhost:4000/albums')
+            //fulfulled state
+            .then(
+                //updates movies array in state with data from json
+                (response) => {
+                        this.setState({ albums: response.data.sort(this.orderByRatingAsc) })
+                    // this.state.albums.sort(orderByOrderValue);
+                    console.log(this.state.albums)
+                })
+            //rejected state, logs error message
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    ReloadDataDesc() {
+        axios.get('http://localhost:4000/albums')
+            //fulfulled state
+            .then(
+                //updates movies array in state with data from json
+                (response) => {
+                        this.setState({ albums: response.data.sort(this.orderByRatingDesc) })
+                    // this.state.albums.sort(orderByOrderValue);
+                    console.log(this.state.albums)
+                })
+            //rejected state, logs error message
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+
     render() {
         return (
             <div>
                 <h1>List page</h1>
+                <Button onClick={this.ReloadDataDesc}>Highest to Lowest</Button>
+                <Button onClick={this.ReloadDataAsc}>Lowest to Highest</Button>
                 <Albums albums={this.state.albums} ReloadData={this.ReloadData}></Albums>
             </div>
         );
