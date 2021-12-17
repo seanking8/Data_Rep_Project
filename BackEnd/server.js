@@ -210,15 +210,17 @@ app.post('/albums', (req, res) => {
     console.log(req.body.Title);
     console.log(req.body.Artist);
     console.log(req.body.Rating);
+    console.log(req.body.CoverArt);
 
     AlbumMod.create({
         Title: req.body.Title,
         Artist: req.body.Artist,
-        Rating: req.body.Rating
+        Rating: req.body.Rating,
+        CoverArt: req.body.CoverArt
     })
 
     //Send confirmation to the client
-    res.send('Album Added!');
+    res.send(req.body.Title+' Added!'+'\n'+req.body.CoverArt);
 })
 
 //Listens for DELETE request at the below path and reads ID from URL.

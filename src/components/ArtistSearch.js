@@ -16,7 +16,7 @@ class ArtistSearch extends Component {
         this.handleChangeSelect = this.handleChangeSelect.bind(this);
         this.handleChangeArtist = this.handleChangeArtist.bind(this);
         this.handleChangeRating = this.handleChangeRating.bind(this);
-        // this.handleChangeCoverArt = this.handleChangeCoverArt.bind(this);
+        this.handleChangeCoverArt = this.handleChangeCoverArt.bind(this);
 
         //set values in state to blank
         this.state = {
@@ -118,9 +118,38 @@ class ArtistSearch extends Component {
         //     Selection: e.target.value
         // })
         if (e.target.value !== '') {
+            // var URL = this.getImgURL(e.target.value);
+
+            axios.get('https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q=' + this.state.Artist + '+' + this.state.Title + '+official+album+cover&pageNumber=1&pageSize=1&autoCorrect=false',
+                {
+                    headers: {
+                        'x-rapidapi-host': 'contextualwebsearch-websearch-v1.p.rapidapi.com',
+                        'x-rapidapi-key': '089bbbf25fmsh4c2becce25f5f03p1e1ccajsn4236d6277699'
+                    }
+                })
+                .then(
+                    //updates movies array in state with data from json
+                    (response) => {
+                        console.log(response.data.value[0].url);
+                        this.setState({
+                            CoverArt: response.data.value[0].url
+                        })
+                        console.log(this.state.CoverArt);
+
+                        let success = this.state.Selection + ' has been added!\nArtist: ' + this.state.Artist + '\nRating: ' + this.state.Rating + '\nCover URL: ' + this.state.CoverArt;
+                        console.log(success)
+                    })
+                //rejected state, logs error message
+                .catch((error) => {
+                    console.log(error);
+                });
+
             this.setState({
-                Selection: e.target.value
+                Selection: e.target.value,
+                // CoverArt: URL
             })
+
+            //this.getImgURL(e.target.value);
         } else {
             this.setState({ Selection: '' })
         }
@@ -132,18 +161,22 @@ class ArtistSearch extends Component {
         this.setState({
             Rating: e.target.value
         })
-        //this.handleChangeCoverArt();
     }
 
-    // //Updates value of Rating in state when change is made to form
-    // handleChangeCoverArt(e) {
-    //     var imgString = '';
+    handleChangeCoverArt(URL) {
+        this.setState({
+            CoverArt: URL
+        })
+    }
+
+    // getImgURL(albumName) {
+    //     // var imgString = '';
 
     //     var options = {
     //         method: 'GET',
     //         url: 'https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI',
     //         params: {
-    //             q: this.state.Artist + ' ' + this.state.Selection + ' official album cover',
+    //             q: this.state.Artist + ' ' + albumName + ' official album cover',
     //             pageNumber: '1',
     //             pageSize: '1',
     //             autoCorrect: 'true'
@@ -155,13 +188,20 @@ class ArtistSearch extends Component {
     //     };
 
     //     axios.request(options).then(function (response) {
-    //         imgString = response.data.value[0].url;
+    //         // console.log(response.data.value[0].url);
+    //         return response.data.value[0].url;
     //         //console.log('space' + this.state.CoverArt + 'space');
     //         // this.setState({ CoverArt: response.data.value[0].url })
     //     }).catch(function (error) {
     //         console.error(error);
     //     });
+    //     // return imgString;
 
+    // }
+
+    // //Updates value of Rating in state when change is made to form
+    // handleChangeCoverArt(e) {
+    //     
     //     this.setState({ CoverArt: imgString });
     //     console.log(this.state.CoverArt);
     // }
@@ -169,8 +209,30 @@ class ArtistSearch extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        let success = this.state.Selection + ' has been added!\nArtist: ' + this.state.Artist + '\nRating: ' + this.state.Rating;
-        console.log(success)
+        // var options = {
+        //     method: 'GET',
+        //     url: 'https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI',
+        //     params: {
+        //         q: this.state.Artist + ' ' + this.state.Title + ' official album cover',
+        //         pageNumber: '1',
+        //         pageSize: '1',
+        //         autoCorrect: 'true'
+        //     },
+        //     headers: {
+        //         'x-rapidapi-host': 'contextualwebsearch-websearch-v1.p.rapidapi.com',
+        //         'x-rapidapi-key': '089bbbf25fmsh4c2becce25f5f03p1e1ccajsn4236d6277699'
+        //     }
+        // };
+
+        // axios.request(options).then(function (response) {
+        //     console.log(response.data.value[0].url);
+        //     // return response.data.value[0].url;
+        //     //console.log('space' + this.state.CoverArt + 'space');
+        //     this.setState({ CoverArt: response.data.value[0].url })
+        // }).catch(function (error) {
+        //     console.error(error);
+        // });
+
 
 
 
@@ -188,7 +250,13 @@ class ArtistSearch extends Component {
             .catch((error) => {
                 console.log(error);
             });
+
+
+
+
     }
+
+
 
 
     render() {
