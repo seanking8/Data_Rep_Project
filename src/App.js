@@ -2,11 +2,12 @@ import './App.css';
 import React, { Component } from 'react';
 import Home from './Components/Home';
 import Add from './Components/Add';
-import Edit from './Components/Edit';
+import Update from './Components/Update';
 import List from './Components/List';
 import ArtistSearch from './Components/ArtistSearch';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Container } from 'react-bootstrap';
+import Logo from './Logo.svg'
 import {
   BrowserRouter as BRouter,
   Switch,
@@ -15,28 +16,28 @@ import {
 
 class App extends Component {
 
-  // Routing is used to switch out which compnonent is being displayed,
+  // Using Routing to switch out which compnonent is being displayed,
   // based on which link in the Bootstrap NavBar is selected
   render() {
     return (
       <BRouter>
         <div className="App">
-          <Navbar bg="dark" variant="dark">
-            <Container><Navbar.Brand href="/home">
-              <img
-                alt=""
-                src="/logo.svg"
-                width="30"
-                height="30"
-                className="d-inline-block align-top"
-              />{' '}
-              Record-Scratch
-            </Navbar.Brand>
+          <Navbar class="Navbar" expand="lg" bg="dark" variant="dark" >
+            <Container>
+              <Navbar.Brand href="/home">
+                <img
+                  alt=""
+                  src={Logo}
+                  width="70"
+                  height="70"
+                  className="d-inline-block"
+                />
+                Record-Scratch
+              </Navbar.Brand>
               <Nav className="me-auto">
                 <Nav.Link href="/home">Home</Nav.Link>
                 <Nav.Link href="/list">List</Nav.Link>
                 <Nav.Link href="/add">Add</Nav.Link>
-                <Nav.Link href="/edit">Edit</Nav.Link>
               </Nav>
             </Container>
           </Navbar>
@@ -47,7 +48,7 @@ class App extends Component {
             </Route>
             <Route path="/List" component={List}>
             </Route>
-            <Route path="/Edit/:id" component={Edit}>
+            <Route path="/Update/:id" component={Update}>
             </Route>
             <Route path="/ArtistSearch" component={ArtistSearch}>
             </Route>

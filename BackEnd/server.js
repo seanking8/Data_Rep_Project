@@ -1,4 +1,4 @@
-//This app starts a server using Express and listens on port 4000 for connections
+//Starts a server using Express and listens on port 4000 for connections
 
 const express = require('express');
 const app = express();
@@ -7,131 +7,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 
-
-// let mbid = "9c9f1380-2516-4fc9-a3e6-f9f61941d090";
-
-// async function main() {
-//     let releases = [];
-
-//     app.get('https://musicbrainz.org/ws/2/release?artist=9c9f1380-2516-4fc9-a3e6-f9f61941d090&inc=recordings+release-groups+ratings&limit=100&fmt=json', (req, res) => {
-
-//         //response = res.json(data);
-//         console.log(res);
-//     })
-// }
-
-// main();
-
-// //import fetch from "node-fetch";
-// const fetch = require('node-fetch');
-
-// function sleep(ms) {
-//     return new Promise(resolve => setTimeout(resolve, ms));
-// }
-
-// async function main() {
-//     let mbid = "9c9f1380-2516-4fc9-a3e6-f9f61941d090";
-//     let releases = [];
-
-//     let response = await fetch(`https://musicbrainz.org/ws/2/release?artist=${mbid}&inc=recordings+release-groups+ratings&limit=100&fmt=json`);
-//     let jsonResponse = await response.json();
-//     releases.push(jsonResponse.releases);
-//     let releaseCount = jsonResponse["release-count"];
-
-//     for (let offset = 100; offset < releaseCount; offset += 100) {
-//         await sleep(1000);
-//         let response = await fetch(`https://musicbrainz.org/ws/2/release?artist=${mbid}&inc=recordings+release-groups+ratings&offset=${offset}&limit=100&fmt=json`);
-//         let jsonResponse = await response.json();
-//         releases.push(jsonResponse.releases);
-//     }
-
-//     if (releases.flat(1).length == releaseCount) {
-//         console.log("All releases were fetched");
-//     } else {
-//         console.log("Problem: some releases were not fetched");
-//     }
-
-//     console.log(releases);
-// }
-
-// main();
-
-
-
-
-
-// const MusicBrainzApi = require('musicbrainz-api').MusicBrainzApi;
-
-// const mbApi = new MusicBrainzApi({
-//   appName: 'Record-Scratch',
-//   appVersion: '0.1.0',
-//   appContactInfo: 'seank579@gmail.com'
-// });
-
-// // const config = {
-// //     appName: 'Record-Scratch',
-// //     appVersion: '0.1.0',
-
-// //     // Optional, default: no proxy server
-// //     // proxy: {
-// //     //   host: 'localhost',
-// //     //   port: 8888
-// //     //  },
-
-// //     // Your e-mail address, required for submitting ISRCs
-// //     appMail: 'seank579@gmail.com'
-// //   }
-
-//   //const mbApi = new MusicbrainzApi(config);
-
-//   const artist = mbApi.getEntity('artist', 'ab2528d9-719f-4261-8098-21849222a0f2');
-
-//   console.log(artist);
-
-
-// app.get('/authorize', function(req, res){
-// 	var oAuth = new Discogs().oauth();
-// 	oAuth.getRequestToken(
-// 		'TsDBbPiVMJQviCevQPbs', 
-// 		'TLXJlnvgkKJUvSraNPTGwbodTOUXxWWM', 
-// 		'http://your-script-url/callback', 
-// 		function(err, requestData){
-// 			// Persist "requestData" here so that the callback handler can 
-// 			// access it later after returning from the authorize url
-// 			res.redirect(requestData.authorizeUrl);
-// 		}
-// 	);
-// });
-
-// app.get('https://api.discogs.com/oauth/request_token', (req, res)=>{
-
-// });
-
-// var Discogs = require('disconnect').Client;
-// const { default: axios } = require('axios');
-
-// // Authenticate by user token
-// //var dis = new Discogs({userToken: 'https://api.discogs.com/oauth/access_token'});
-// var dis = new Discogs('RecordScratch/1.0', {userToken: 'https://api.discogs.com/oauth/access_token'});
-
-
-// // Authenticate by consumer key and secret
-// var dis = new Discogs({
-// 	consumerKey: 'TsDBbPiVMJQviCevQPbs', 
-// 	consumerSecret: 'TLXJlnvgkKJUvSraNPTGwbodTOUXxWWM'
-// });
-
-// var db = new Discogs().database();
-// db.getRelease(176126, function(err, data){
-// 	console.log(data);
-// });
-
-// var dis = new Discogs('RecordScratch/1.0', {userToken: 'https://api.discogs.com/oauth/access_token'});
-
-
-
-
-//bodyParser is deprecated. As of V4.16, it is inbuilt into Express
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }))
 
@@ -152,6 +27,7 @@ app.use(function (req, res, next) {
 //Configuration - point to build folder and static folder
 app.use(express.static(path.join(__dirname, '../build')));
 app.use('/static', express.static(path.join(__dirname, 'build//static')));
+
 
 //Connect server to hosted MongoDB database
 
@@ -178,7 +54,7 @@ var albumSchema = new Schema({
 
 var AlbumMod = mongoose.model("albums", albumSchema);
 
-// Respond to any request which includes the '/albums' path with movie info in JSON form
+// Respond to any request which includes the '/albums' path with album info in JSON form
 app.get('/albums', (req, res) => {
 
     AlbumMod.find((err, data) => {
@@ -220,7 +96,7 @@ app.post('/albums', (req, res) => {
     })
 
     //Send confirmation to the client
-    res.send(req.body.Title+' Added!'+'\n'+req.body.CoverArt);
+    res.send(req.body.Title+' Added!');
 })
 
 //Listens for DELETE request at the below path and reads ID from URL.
@@ -239,5 +115,5 @@ app.get('*', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Record-Scratch Express server listening at http://localhost:${port}`)
 })

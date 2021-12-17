@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Component to display a form where the user can submit a movie and its details
 // Will be displayed when Create is seleted in nav bar
-class Edit extends Component {
+class Update extends Component {
 
     constructor() {
         //invoke parent constructor
@@ -124,4 +124,4 @@ class Edit extends Component {
     }
 }
 
-export default Edit;
+export default Update;
