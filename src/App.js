@@ -4,7 +4,6 @@ import Home from './Components/Home';
 import Add from './Components/Add';
 import Update from './Components/Update';
 import List from './Components/List';
-import ArtistSearch from './Components/ArtistSearch';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import Logo from './Logo.svg'
@@ -23,7 +22,7 @@ class App extends Component {
       <BRouter>
         <div className="App">
           <Navbar class="Navbar" expand="lg" bg="dark" variant="dark" >
-            <Container>
+            <Container bg="blue">
               <Navbar.Brand href="/home">
                 <img
                   alt=""
@@ -44,13 +43,13 @@ class App extends Component {
           <Switch>
             <Route path="/home" component={Home}>
             </Route>
+            <Route exact path="/" component={Home}>
+            </Route>
             <Route path="/Add" component={Add}>
             </Route>
             <Route path="/List" component={List}>
             </Route>
             <Route path="/Update/:id" component={Update}>
-            </Route>
-            <Route path="/ArtistSearch" component={ArtistSearch}>
             </Route>
           </Switch>
         </div>

@@ -12,7 +12,7 @@ class AlbumInstance extends Component {
         this.DeleteAlbum = this.DeleteAlbum.bind(this);
     }
 
-    //Makes HTTP DELETE request to server to delete movie.
+    //Makes HTTP DELETE request to server to delete album.
     //Also calls ReloadData function which has been passed down from its grandparent, the Read component
     DeleteAlbum(e) {
         e.preventDefault();
@@ -32,12 +32,14 @@ class AlbumInstance extends Component {
     render() {
         return (
             <div>
+                <br />
                 <h3>{this.props.album.Title}</h3>
                 <p>{this.props.album.Artist}</p>
                 <h4>{this.props.album.Rating} &#9733;</h4>
-                <img alt='' src={this.props.album.CoverArt} width="150px" height="150px"/>
+                <img alt='' src={this.props.album.CoverArt} width="150px" height="150px" />
                 <Link to={"/edit/" + this.props.album._id} className="btn btn-secondary btn-sm">Edit</Link>
                 <Button variant="danger" onClick={this.DeleteAlbum} className="btn-sm">Delete</Button>
+                <br />
             </div>
         );
     }

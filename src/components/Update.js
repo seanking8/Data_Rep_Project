@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-// Component to display a form where the user can submit a movie and its details
-// Will be displayed when Create is seleted in nav bar
+// Component to display a form where the user can submit an album
 class Update extends Component {
 
     constructor() {
@@ -23,13 +22,13 @@ class Update extends Component {
         }
     }
 
-    //When component becomes active, pass id from URL server to identify and read movie document from DB
+    //When component becomes active, pass id from URL server to identify and read album document from DB
     componentDidMount() {
         console.log(this.props.match.params.id);
 
         //Async call which returns promise
         axios.get('http://localhost:4000/albums/' + this.props.match.params.id)
-            //fulfilled state, logs response
+            //fulfilled state, adds response to state
             .then(response => {
                 this.setState({
                     _id: response.data._id,
@@ -65,7 +64,7 @@ class Update extends Component {
         })
     }
 
-    //Prints success message with movie details in console and alert. Resets state values to blank
+    //Prints success message with album details in console and alert. Resets state values to blank
     //Now uses Axios to POST state values to server
     handleSubmit(e) {
         e.preventDefault();
@@ -74,7 +73,7 @@ class Update extends Component {
         alert(success)
         console.log(success)
 
-        //Pass new movie info from the state to the server where it will be written to the DB
+        //Pass new album info from the state to the server where it will be written to the DB
         axios.put('http://localhost:4000/albums/' + this.state._id, this.state)
             //fulfilled state, logs response
             .then(res => {
