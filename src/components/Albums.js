@@ -4,8 +4,8 @@ import AlbumInstance from "./AlbumInstance";
 class Albums extends Component {
 
     render() {
-        return this.props.albums.map((album) => {
-            return <AlbumInstance album={album} ReloadData={this.props.ReloadData}></AlbumInstance>
+        return this.props.albums.map((album, i) => {
+            return <AlbumInstance key={i} album={album} ReloadData={this.props.ReloadData}></AlbumInstance>
         })
     }
 }

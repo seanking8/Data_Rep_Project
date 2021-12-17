@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 class Add extends Component {
 
@@ -17,7 +18,8 @@ class Add extends Component {
         this.state = {
             Title: '',
             Artist: '',
-            Rating: ''
+            Rating: '',
+            CoverArt: ''
         }
     }
 
@@ -46,14 +48,15 @@ class Add extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        let success = this.state.Title + ' has been added!\nArtist: ' + this.state.Artist + '\Rating: ' + this.state.Rating;
+        let success = this.state.Title + ' has been added!\nArtist: ' + this.state.Artist + '\nRating: ' + this.state.Rating;
         alert(success)
         console.log(success)
 
         const newAlbum = {
             Title: this.state.Title,
             Artist: this.state.Artist,
-            Rating: this.state.Rating
+            Rating: this.state.Rating,
+            CoverArt: this.state.CoverArt
         }
 
         axios.post('http://localhost:4000/albums', newAlbum)
@@ -95,6 +98,7 @@ class Add extends Component {
                     </div>
                     <input type="submit" value="Add Album" className="btn btn-primary" />
                 </form>
+                <Link to={"/ArtistSearch"} className="btn btn-secondary btn-sm">Auto</Link>
             </div>
         );
     }

@@ -35,6 +35,7 @@ class AlbumInstance extends Component {
                 <h3>{this.props.album.Title}</h3>
                 <p>{this.props.album.Artist}</p>
                 <h4>{this.props.album.Rating} &#9733;</h4>
+                <img src={this.props.album.CoverArt} width="150px" height="150px"/>
                 <Link to={"/edit/" + this.props.album._id} className="btn btn-secondary btn-sm">Edit</Link>
                 <Button variant="danger" onClick={this.DeleteAlbum} className="btn-sm">Delete</Button>
             </div>

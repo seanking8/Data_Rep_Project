@@ -4,13 +4,13 @@ import Home from './Components/Home';
 import Add from './Components/Add';
 import Edit from './Components/Edit';
 import List from './Components/List';
+import ArtistSearch from './Components/ArtistSearch';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import {
   BrowserRouter as BRouter,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 class App extends Component {
@@ -48,6 +48,8 @@ class App extends Component {
             <Route path="/List" component={List}>
             </Route>
             <Route path="/Edit/:id" component={Edit}>
+            </Route>
+            <Route path="/ArtistSearch" component={ArtistSearch}>
             </Route>
           </Switch>
         </div>

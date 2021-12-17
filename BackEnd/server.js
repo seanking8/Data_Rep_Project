@@ -7,6 +7,130 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 
+
+// let mbid = "9c9f1380-2516-4fc9-a3e6-f9f61941d090";
+
+// async function main() {
+//     let releases = [];
+
+//     app.get('https://musicbrainz.org/ws/2/release?artist=9c9f1380-2516-4fc9-a3e6-f9f61941d090&inc=recordings+release-groups+ratings&limit=100&fmt=json', (req, res) => {
+
+//         //response = res.json(data);
+//         console.log(res);
+//     })
+// }
+
+// main();
+
+// //import fetch from "node-fetch";
+// const fetch = require('node-fetch');
+
+// function sleep(ms) {
+//     return new Promise(resolve => setTimeout(resolve, ms));
+// }
+
+// async function main() {
+//     let mbid = "9c9f1380-2516-4fc9-a3e6-f9f61941d090";
+//     let releases = [];
+
+//     let response = await fetch(`https://musicbrainz.org/ws/2/release?artist=${mbid}&inc=recordings+release-groups+ratings&limit=100&fmt=json`);
+//     let jsonResponse = await response.json();
+//     releases.push(jsonResponse.releases);
+//     let releaseCount = jsonResponse["release-count"];
+
+//     for (let offset = 100; offset < releaseCount; offset += 100) {
+//         await sleep(1000);
+//         let response = await fetch(`https://musicbrainz.org/ws/2/release?artist=${mbid}&inc=recordings+release-groups+ratings&offset=${offset}&limit=100&fmt=json`);
+//         let jsonResponse = await response.json();
+//         releases.push(jsonResponse.releases);
+//     }
+
+//     if (releases.flat(1).length == releaseCount) {
+//         console.log("All releases were fetched");
+//     } else {
+//         console.log("Problem: some releases were not fetched");
+//     }
+
+//     console.log(releases);
+// }
+
+// main();
+
+
+
+
+
+// const MusicBrainzApi = require('musicbrainz-api').MusicBrainzApi;
+
+// const mbApi = new MusicBrainzApi({
+//   appName: 'Record-Scratch',
+//   appVersion: '0.1.0',
+//   appContactInfo: 'seank579@gmail.com'
+// });
+
+// // const config = {
+// //     appName: 'Record-Scratch',
+// //     appVersion: '0.1.0',
+
+// //     // Optional, default: no proxy server
+// //     // proxy: {
+// //     //   host: 'localhost',
+// //     //   port: 8888
+// //     //  },
+
+// //     // Your e-mail address, required for submitting ISRCs
+// //     appMail: 'seank579@gmail.com'
+// //   }
+
+//   //const mbApi = new MusicbrainzApi(config);
+
+//   const artist = mbApi.getEntity('artist', 'ab2528d9-719f-4261-8098-21849222a0f2');
+
+//   console.log(artist);
+
+
+// app.get('/authorize', function(req, res){
+// 	var oAuth = new Discogs().oauth();
+// 	oAuth.getRequestToken(
+// 		'TsDBbPiVMJQviCevQPbs', 
+// 		'TLXJlnvgkKJUvSraNPTGwbodTOUXxWWM', 
+// 		'http://your-script-url/callback', 
+// 		function(err, requestData){
+// 			// Persist "requestData" here so that the callback handler can 
+// 			// access it later after returning from the authorize url
+// 			res.redirect(requestData.authorizeUrl);
+// 		}
+// 	);
+// });
+
+// app.get('https://api.discogs.com/oauth/request_token', (req, res)=>{
+
+// });
+
+// var Discogs = require('disconnect').Client;
+// const { default: axios } = require('axios');
+
+// // Authenticate by user token
+// //var dis = new Discogs({userToken: 'https://api.discogs.com/oauth/access_token'});
+// var dis = new Discogs('RecordScratch/1.0', {userToken: 'https://api.discogs.com/oauth/access_token'});
+
+
+// // Authenticate by consumer key and secret
+// var dis = new Discogs({
+// 	consumerKey: 'TsDBbPiVMJQviCevQPbs', 
+// 	consumerSecret: 'TLXJlnvgkKJUvSraNPTGwbodTOUXxWWM'
+// });
+
+// var db = new Discogs().database();
+// db.getRelease(176126, function(err, data){
+// 	console.log(data);
+// });
+
+// var dis = new Discogs('RecordScratch/1.0', {userToken: 'https://api.discogs.com/oauth/access_token'});
+
+
+
+
 //bodyParser is deprecated. As of V4.16, it is inbuilt into Express
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }))
@@ -46,7 +170,8 @@ const Schema = mongoose.Schema;
 var albumSchema = new Schema({
     Title: String,
     Artist: String,
-    Rating: Number
+    Rating: Number,
+    CoverArt: String
 });
 
 //Compile model from schema
